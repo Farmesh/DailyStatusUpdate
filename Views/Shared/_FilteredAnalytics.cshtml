@@ -1,0 +1,54 @@
+﻿@model IEnumerable<dynamic>
+
+@if (Model != null && Model.Any())
+{
+    foreach (var emp in Model)
+    {
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header bg-dark text-white fw-bold">
+                👤 @emp.EmployeeName
+            </div>
+            <div class="card-body">
+                @foreach (var entry in (IEnumerable<dynamic>)emp.DailyEntries)
+                {
+                    <div class="mb-3">
+                        <h6 class="text-primary">📅 @Convert.ToDateTime(entry.Date).ToString("dd MMM yyyy")</h6>
+                        <table class="table table-bordered table-sm">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>In Progress Project</th>
+                                    <th>In Progress Module</th>
+                                    <th>In Progress Task</th>
+                                    <th>Planned Project</th>
+                                    <th>Planned Module</th>
+                                    <th>Planned Task</th>
+                                    <th>Blockage</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var status in (IEnumerable<dynamic>)entry.Statuses)
+                                {
+                                    <tr>
+                                        <td>@status.InProgressProject</td>
+                                        <td>@status.InProgressModule</td>
+                                        <td>@status.InProgressTask</td>
+                                        <td>@status.PlannedProject</td>
+                                        <td>@status.PlannedModule</td>
+                                        <td>@status.PlannedTask</td>
+                                        <td>@status.Blockage</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+}
+else
+{
+    <div class="alert alert-info text-center">
+        No submissions found.
+    </div>
+}

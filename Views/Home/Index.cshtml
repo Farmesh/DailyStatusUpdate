@@ -1,0 +1,157 @@
+﻿@model DailyStatusApp.Models.DailyStatus
+
+@{
+    ViewData["Title"] = "Submit Daily Status";
+}
+
+<!-- Add Bootstrap for quick styling -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Add Custom CSS for extra styling -->
+<style>
+    /* Global Styles */
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(to right,#ffffff, #2575fc);
+        padding: 0;
+        color: #fff;
+        
+    }
+
+    .form-container {
+        max-width: 900px;
+        margin: 0 auto;
+        background-color: #ffffff;
+        padding: 40px;
+        border-radius: 12px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .form-title {
+        font-size: 2.5rem;
+        margin-bottom: 30px;
+        color: #343a40;
+        text-align: center;
+        font-weight: bold;
+    }
+
+    /* Form Group Styling */
+    .form-group label {
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 10px;
+        font-size: 1rem;
+    }
+
+    .form-group input, .form-group textarea {
+        border-radius: 8px;
+        padding: 12px;
+        border: 1px solid #ced4da;
+        width: 100%;
+        font-size: 1rem;
+        box-sizing: border-box;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        .form-group input:focus, .form-group textarea:focus {
+            border-color: #2575fc;
+            box-shadow: 0 0 8px rgba(37, 117, 252, 0.3);
+            outline: none;
+        }
+
+    .form-group textarea {
+        resize: vertical;
+    }
+
+    /* Submit Button Styling */
+    .form-group button {
+        background-color: #2575fc;
+        color: white;
+        border: none;
+        padding: 15px 20px;
+        font-size: 1.2rem;
+        cursor: pointer;
+        width: 100%;
+        border-radius: 8px;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+        .form-group button:hover {
+           
+            transform: translateY(-2px);
+        }
+
+    /* Alert Styling */
+    .alert {
+        padding: 15px;
+        margin-top: 20px;
+        font-weight: bold;
+        background-color: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+        border-radius: 5px;
+    }
+
+   
+   
+</style>
+
+<div class="form-container">
+    <h2 class="form-title">@ViewData["Title"]</h2>
+
+    @if (ViewBag.Message != null)
+    {
+        <div class="alert alert-info">
+            <p>@ViewBag.Message</p>
+        </div>
+    }
+
+    <form method="post" asp-action="SubmitStatus">
+        <div class="form-group">
+            <label for="EmployeeName">Employee Name</label>
+            <input type="text" id="EmployeeName" name="EmployeeName" required class="form-control" />
+        </div>
+        <div class="form-group">
+            <label for="EmployeeId">Employee ID</label>
+            <input type="text" id="EmployeeId" name="EmployeeId"  class="form-control" />
+        </div>
+        <div class="form-group">
+            <label for="InProgressProject">In Progress Project</label>
+            <input type="text" id="InProgressProject" name="InProgressProject"  class="form-control" />
+        </div>
+        <div class="form-group">
+            <label for="InProgressModule">In Progress Module</label>
+            <input type="text" id="InProgressModule" name="InProgressModule"  class="form-control" />
+        </div>
+        <div class="form-group">
+            <label for="InProgressTask">In Progress Task</label>
+            <textarea id="InProgressTask" name="InProgressTask"  class="form-control" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="PlannedProject">Planned Project</label>
+            <input type="text" id="PlannedProject" name="PlannedProject"  class="form-control" />
+        </div>
+        <div class="form-group">
+            <label for="PlannedModule">Planned Module</label>
+            <input type="text" id="PlannedModule" name="PlannedModule"  class="form-control" />
+        </div>
+        <div class="form-group">
+            <label for="PlannedTask">Planned Task</label>
+            <textarea id="PlannedTask" name="PlannedTask"  class="form-control" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="Blockage">Blockage</label>
+            <textarea id="Blockage" name="Blockage" class="form-control" rows="3"></textarea>
+        </div>
+        <div class="form-group" style="margin-bottom:14px;">
+            <label for="SubmittedByEmail">Email</label>
+            <input type="email" id="SubmittedByEmail" name="SubmittedByEmail" required class="form-control" value="@ViewBag.Email" />
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </form>
+</div>
+
+<!-- Bootstrap JS (Optional, for functionality like modals, tooltips) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>

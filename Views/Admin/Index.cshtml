@@ -1,0 +1,118 @@
+﻿@{
+    ViewData["Title"] = "Admin - Daily Status View";
+    var analytics = ViewBag.Analytics as IEnumerable<dynamic>;
+    var currentDate = DateTime.Now.ToString("yyyy-MM-dd");  // Get current date in yyyy-MM-dd format
+}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css" rel="stylesheet"> <!-- For icons -->
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">🛠️ Daily Status Submissions - Admin View</h2>
+
+    <!-- Employee and Date Filters -->
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <label for="employeeSelect" class="form-label fw-bold">Select Employee</label>
+            <select id="employeeSelect" class="form-select" aria-label="Select Employee">
+                <option value="">Select Employee</option>
+                @foreach (var emp in analytics)
+                {
+                    <option value="@emp.EmployeeName">@emp.EmployeeName</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-6">
+            <label for="dateSelect" class="form-label fw-bold">Select Date</label>
+            <select id="dateSelect" class="form-select" aria-label="Select Date">
+                <option value="">Select Date</option>
+                @foreach (var emp in analytics)
+                {
+                    @foreach (var entry in emp.DailyEntries)
+                    {
+                        var formattedDate = Convert.ToDateTime(entry.Date).ToString("yyyy-MM-dd");
+                        var displayDate = Convert.ToDateTime(entry.Date).ToString("dd MMM yyyy");
+                        var isSelected = currentDate == formattedDate;
+                        <option value="@formattedDate" selected="@(isSelected ? "selected" : null)">
+                            @Html.Raw(displayDate)
+                        </option>
+                    }
+                }
+            </select>
+        </div>
+    </div>
+
+    <!-- Filter Button -->
+    <div class="row mb-4">
+        <div class="col-md-12 text-center">
+            <button id="filterButton" class="btn btn-primary btn-lg">
+                <i class="fa fa-filter"></i> Filter Status
+            </button>
+        </div>
+    </div>
+
+    <!-- Analytics Display Area -->
+    <p class="text-muted text-center">✅ Analytics loaded? @(analytics != null ? "Yes" : "No") | Count: @(analytics?.Count() ?? 0)</p>
+
+    <div id="analyticsContainer">
+        <!-- Content will be dynamically loaded here -->
+        <div class="text-center">
+            <div class="spinner-border text-primary" role="status" id="loadingSpinner" style="display:none;">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Empty state if no data -->
+    <div id="noData" style="display: none;" class="text-center mt-5">
+        <h4>No Data Found!</h4>
+        <p>Please try with different filters.</p>
+    </div>
+</div>
+
+<!-- Add jQuery CDN -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    // Function to load the filtered data based on employee and date
+    function loadFilteredData(employeeName, selectedDate) {
+        $('#loadingSpinner').show(); // Show loading spinner
+        $.ajax({
+            url: '@Url.Action("GetFilteredAnalytics", "Admin")',
+            type: 'GET',
+            data: {
+                employeeName: employeeName,
+                date: selectedDate
+            },
+            success: function (data) {
+                $('#loadingSpinner').hide(); // Hide loading spinner
+                $('#analyticsContainer').html(data);
+
+                if (data.trim() === "") {
+                    $('#noData').show(); // Show "No Data" message
+                } else {
+                    $('#noData').hide(); // Hide "No Data" message
+                }
+            },
+            error: function () {
+                $('#loadingSpinner').hide(); // Hide loading spinner on error
+                $('#noData').show(); // Show "No Data" message
+            }
+        });
+    }
+
+    // Set the current date as the default value for the date select
+    $(document).ready(function () {
+        $('#dateSelect').val('@currentDate');  // Set the current date in the select dropdown
+        var initialEmployeeName = $('#employeeSelect').val();
+        loadFilteredData(initialEmployeeName, '@currentDate');
+    });
+
+    // Event listener for the filter button
+    $('#filterButton').on('click', function () {
+        var employeeName = $('#employeeSelect').val();
+        var selectedDate = $('#dateSelect').val();
+
+        loadFilteredData(employeeName, selectedDate);
+    });
+</script>

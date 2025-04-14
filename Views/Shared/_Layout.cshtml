@@ -1,0 +1,198 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - DailyStatusApp</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/DailyStatusApp.styles.css" asp-append-version="true" />
+
+    <style>
+        /* CSS HEX */
+        :root {
+            --yellow-green: #8DD331ff;
+            --tomato: #F45A35ff;
+            --tomato-2: #F55833ff;
+            --black: #000000ff;
+            --black-2: #000000ff;
+            --light-gray: #f4f4f4;
+            --dark-gray: #333333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        /* Global Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--light-gray);
+            color: var(--dark-gray);
+        }
+
+        /* Header */
+        header {
+            background-color: var(--tomato-2);
+            color: #fff;
+            padding: 10px 0; /* Reduced padding */
+        }
+
+        nav.navbar {
+            background-color: var(--tomato);
+            padding: 3px;
+        }
+
+            nav.navbar .navbar-brand {
+                color: var(--yellow-green);
+                font-size: 1.6rem;
+                font-weight: bold;
+            }
+
+            nav.navbar .navbar-nav .nav-link {
+                color: #fff;
+                font-weight: 500;
+            }
+
+                nav.navbar .navbar-nav .nav-link:hover {
+                    color: var(--yellow-green);
+                }
+
+        /* Footer */
+        footer {
+            background-color: var(--tomato);
+            color: #fff;
+            padding: 10px 0; /* Reduced padding */
+            text-align: center;
+        }
+
+            footer a {
+                color: var(--yellow-green);
+                font-weight: bold;
+            }
+
+                footer a:hover {
+                    color: var(--tomato);
+                }
+
+        /* Main Content */
+        .container {
+            margin-top: 50px;
+            padding: 30px;
+        }
+
+        main {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            min-height: 400px;
+        }
+
+        h1, h2 {
+            color: var(--tomato);
+            font-weight: bold;
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background-color: var(--yellow-green);
+            border-color: var(--yellow-green);
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+            .btn-primary:hover {
+                background-color: var(--tomato);
+                border-color: var(--tomato);
+            }
+
+        .btn-secondary {
+            background-color: var(--tomato-2);
+            border-color: var(--tomato-2);
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+            .btn-secondary:hover {
+                background-color: var(--yellow-green);
+                border-color: var(--yellow-green);
+            }
+
+        /* Additional Custom Styles */
+        .navbar-toggler {
+            border: 1px solid var(--yellow-green);
+        }
+
+        .navbar-toggler-icon {
+            background-color: var(--yellow-green);
+        }
+
+        .navbar-collapse {
+            background-color: var(--tomato);
+        }
+
+        .navbar-nav .nav-item {
+            margin-left: 20px;
+        }
+
+        .footer-text {
+            font-size: 0.7rem;
+        }
+
+        header footer {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">DailyStatusApp</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Auth" asp-action="Index">Login</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer>
+        <div class="container footer-text" style="margin:0">
+            &copy; 2025 - DailyStatusApp - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
